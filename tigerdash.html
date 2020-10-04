@@ -22,7 +22,8 @@
 
     var map = new mapboxgl.Map({
         container: 'map', // container id
-        style: 'mapbox://styles/cyntwikip/ckfuvxid13r2g19mubfjorqxa' // replace this with your style URL
+        // style: 'mapbox://styles/cyntwikip/ckfuvxid13r2g19mubfjorqxa' // replace this with your style URL // old
+        style: 'mapbox://styles/cyntwikip/ckfv4mld73zi219mu2cmjtwkn' // replace this with your style URL
     });
 
     map.on('load', function() {
@@ -50,15 +51,24 @@
 
     map.on('mousemove', function(e) {
         var states = map.queryRenderedFeatures(e.point, {
-            layers: ['rainfall', 'elevation']
+            layers: ['climate resiliency index', 'climate index', 'environment index', 'social index']
         });
 
         if (states.length > 0) {
-            document.getElementById('pd').innerHTML = '<h3><strong>' + states[0].properties.name
-                + '</strong></h3><p><strong><em>' + states[0].properties.density + '</strong> people/km<sup>2</sup></em></p>'
-                + '</strong></h3><p><strong><em>' + states[0].properties.rainfall + '</strong> (mm) annual rainfall</em></p>'
-                + '</strong></h3><p><strong><em>' + states[0].properties.elevation + '</strong> (m) above sea level</em></p>'
-                + '</strong></h3><p><strong><em>' + states[0].properties.temperature + '</strong> (Celsius) annual average temperature</em></p>'
+            document.getElementById('pd').innerHTML = '<h3><strong>' + states[0].properties.name + '</strong></h3>'
+                + '<p>Climate Resiliency:<strong><em>' + states[0].properties['climate resiliency index'] + '</strong> (' + states[0].properties['index legend'] + ')</em></p>'
+                + '<p>Climate Index:<strong><em>' + states[0].properties['climate index'] + '</strong></em></p>'
+                + '<p>Environment Index:<strong><em>' + states[0].properties['environment index'] + '</strong></em></p>'
+                + '<p>Social Index:<strong><em>' + states[0].properties['social index'] + '</strong></em></p>'
+
+                + '<p><strong><em>' + states[0].properties.density + '</strong> people/km<sup>2</sup></em></p>'
+                + '<p><strong><em>' + states[0].properties.rainfall + '</strong> millimeters annual rainfall</em></p>'
+                + '<p><strong><em>' + states[0].properties.elevation + '</strong> meters above sea level</em></p>'
+                + '<p><strong><em>' + states[0].properties.temperature + '</strong> Celsius annual average temperature</em></p>'
+                + '<p><strong><em>' + states[0].properties.natural + '</strong> natural resources (water, trees, grasslands, etc.)</em></p>'
+                + '<p>Green Spaces: <strong><em>' + states[0].properties['green spaces'] + '</strong></em></p>'
+                + '<p>Bodies of Water: <strong><em>' + states[0].properties['bodies of water'] + '</strong></em></p>'
+                + '<p><strong><em>' + states[0].properties.road + '</strong> roads (highways, residential roads, etc.)</p>'
                 ;
         } else {
             document.getElementById('pd').innerHTML = '<p>Hover over a city!</p>';
@@ -68,7 +78,8 @@
     map.getCanvas().style.cursor = 'default';
     // map.fitBounds([[-133.2421875, 16.972741], [-47.63671875, 52.696361]]);
 
-    var toggleableLayerIds = [ 'rainfall', 'elevation', 'temperature'];
+    // var toggleableLayerIds = [ 'rainfall', 'elevation', 'temperature'];
+    var toggleableLayerIds = ['climate resiliency index', 'climate index', 'environment index', 'social index'];
 
     
     function clearToggle() {
@@ -120,7 +131,7 @@
 
     let menu = document.getElementById('menu');
     menu.firstElementChild.className = 'active';
-    map.setLayoutProperty('rainfall', 'rainfall', 'visible');
+    map.setLayoutProperty('climate resiliency index', 'visibility', 'visible');
 
 </script>
 </html>
