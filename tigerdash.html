@@ -117,8 +117,6 @@
             if (visibility === 'visible') {
                 map.setLayoutProperty(clickedLayer, 'visibility', 'none');
                 this.className = '';
-                console.log('visible')
-                console.log(this);
             } else {
                 this.className = 'active';
                 map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
